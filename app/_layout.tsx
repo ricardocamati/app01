@@ -29,7 +29,7 @@ export default function RootLayout() {
   return (
     <>
     <View style={styles.container}>
-      <Text style={{ fontSize: 20, alignSelf: "center", color: "#fdfdfd" }}>cauculadora </Text>
+      <Text style={{ fontSize: 20, alignSelf: "center", color: "#000000" }}>cauculadora </Text>
 
       <TextInput
         style={styles.input}
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderColor: "#06016d",
-    color: "#fdfdfd",
+    color: "#000000",
     marginHorizontal: 10,
     marginVertical: 20,
     paddingHorizontal: 10,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a", 
+    backgroundColor: "#ffffff", 
     paddingTop: 20,
   },
   saida: {
