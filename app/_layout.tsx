@@ -6,10 +6,11 @@ export default function RootLayout() {
   const [entrada, setEntrada] = useState("");
   const [resultado, setResultado] = useState("");
 
-  function calcular() {
-     const res = eval(entrada);
-      setResultado(res.toString());
-   }
+  function calcular() {    
+      const sanitized = entrada.replace(/(^|[^\d.])0+(\d)/g, "$1$2");
+      const res = eval(sanitized);
+      setResultado(String(res));
+    } 
 
   function adicionarOperador(operador: string) {
     setEntrada(entrada + operador);
@@ -131,9 +132,10 @@ const styles = StyleSheet.create({
   botaoTexto: {
     color: "#fff",
     fontSize: 18,
-  },
+  },  
   grid: {
-    flexDirection: "row",    
+    flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
   },
 });
