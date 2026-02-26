@@ -1,4 +1,3 @@
-import { Background } from "@react-navigation/elements";
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, TextInput, View } from "react-native";
 
@@ -6,11 +5,11 @@ export default function RootLayout() {
   const [entrada, setEntrada] = useState("");
   const [resultado, setResultado] = useState("");
 
-  function calcular() {    
-      const sanitized = entrada.replace(/(^|[^\d.])0+(\d)/g, "$1$2");
-      const res = eval(sanitized);
-      setResultado(String(res));
-    } 
+  function calcular() {
+    const linpou = entrada.replace(/(^|[^\d.])0+(\d)/g, "$1$2");
+    const res = eval(linpou);
+    setResultado(String(res));
+  }
 
   function adicionarOperador(operador: string) {
     setEntrada(entrada + operador);
@@ -25,9 +24,12 @@ export default function RootLayout() {
     setEntrada(entrada + numero);
   }
 
+
+
   return (
     <>
-      <Text style={{ fontSize: 20, alignSelf: "center" }}>cauculadora </Text>
+    <View style={styles.container}>
+      <Text style={{ fontSize: 20, alignSelf: "center", color: "#fdfdfd" }}>cauculadora </Text>
 
       <TextInput
         style={styles.input}
@@ -37,7 +39,7 @@ export default function RootLayout() {
         keyboardType="numeric"
       />
       <Text
-        style={{ fontSize: 20, alignSelf: "center", marginVertical: 10 }}
+        style={styles.saida}
       >
         {resultado}
       </Text>
@@ -107,6 +109,7 @@ export default function RootLayout() {
           <Text style={styles.botaoTexto}>C</Text>
         </TouchableOpacity>
       </View>
+      </View>
     </>
   );
 }
@@ -116,6 +119,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderWidth: 1,
     borderColor: "#06016d",
+    color: "#fdfdfd",
     marginHorizontal: 10,
     marginVertical: 20,
     paddingHorizontal: 10,
@@ -130,12 +134,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   botaoTexto: {
-    color: "#fff",
+    color: "#efeded",
     fontSize: 18,
-  },  
+  },
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+    alignItems: "center",
   },
+  container: {
+    flex: 1,
+    backgroundColor: "#0a0a0a", 
+    paddingTop: 20,
+  },
+  saida: {
+    fontSize: 20, alignSelf: "center", marginVertical: 10, color: "#fdfdfd",
+  },
+
+
 });
