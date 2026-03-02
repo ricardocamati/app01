@@ -24,6 +24,14 @@ export default function RootLayout() {
     setEntrada(entrada + numero);
   }
 
+  function adicionarDecimal() {
+    const ultimoOperador = entrada.match(/[+\-*/]/g);
+    const parteAtual = ultimoOperador ? entrada.split(/[+\-*/]/).pop() : entrada;
+    if (!parteAtual?.includes(".")) {
+      setEntrada(entrada + ".");
+    }
+  }
+
 
 
   return (
@@ -99,6 +107,10 @@ export default function RootLayout() {
 
         <TouchableOpacity style={styles.botao} onPress={() => adicionarNumero("9")}>
           <Text style={styles.botaoTexto}>9</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.botao} onPress={adicionarDecimal}>
+          <Text style={styles.botaoTexto}>.</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.botao} onPress={calcular}>
