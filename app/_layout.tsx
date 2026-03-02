@@ -1,14 +1,23 @@
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, TextInput, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, TextInput, View, ScrollView } from "react-native";
 
 export default function RootLayout() {
   const [entrada, setEntrada] = useState("");
   const [resultado, setResultado] = useState("");
+  const [historico, setHistorico] = useState<string[]>([]);
 
   function calcular() {
-    const linpou = entrada.replace(/(^|[^\d.])0+(\d)/g, "$1$2");
-    const res = eval(linpou);
-    setResultado(String(res));
+    try {
+      const linpou = entrada.replace(/(^|[^\d.])0+(\d)/g, "$1$2");
+      const res = eval(linpou);
+      setResultado(String(res));
+      // Adiciona ao histórico
+      if (entrada) {
+        setHistorico([...historico, `${entrada} = ${res}`]);
+      }
+    } catch (erro) {
+      setResultado("Erro");
+    }
   }
 
   function adicionarOperador(operador: string) {
@@ -18,6 +27,10 @@ export default function RootLayout() {
   function limpar() {
     setEntrada("");
     setResultado("");
+  }
+
+  function limparHistorico() {
+    setHistorico([]);
   }
 
   function adicionarNumero(numero: string) {
@@ -121,6 +134,21 @@ export default function RootLayout() {
           <Text style={styles.botaoTexto}>C</Text>
         </TouchableOpacity>
       </View>
+
+      <Text style={{ fontSize: 16, alignSelf: "center", marginTop: 15, fontWeight: "bold" }}>Histórico</Text>
+      <ScrollView style={styles.historicoContainer}>
+        {historico.length === 0 ? (
+          <Text style={{ textAlign: "center", color: "#999", marginTop: 10 }}>Nenhuma operação ainda</Text>
+        ) : (
+          historico.map((item, index) => (
+            <Text key={index} style={styles.historicoItem}>{item}</Text>
+          ))
+        )}
+      </ScrollView>
+
+      <TouchableOpacity style={[styles.botao, styles.botaoLimpar]} onPress={limparHistorico}>
+        <Text style={styles.botaoTexto}>Limpar Histórico</Text>
+      </TouchableOpacity>
       </View>
     </>
   );
@@ -163,6 +191,26 @@ const styles = StyleSheet.create({
   saida: {
     fontSize: 20, alignSelf: "center", marginVertical: 10, color: "#fdfdfd",
   },
-
-
+  historicoContainer: {
+    maxHeight: 200,
+    marginVertical: 10,
+    marginHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#06016d",
+    borderRadius: 8,
+    padding: 10,
+  },
+  historicoItem: {
+    fontSize: 14,
+    color: "#333",
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  botaoLimpar: {
+    width: "auto",
+    paddingHorizontal: 15,
+    marginHorizontal: 15,
+    marginBottom: 20,
+  },
 });
