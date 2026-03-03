@@ -63,16 +63,16 @@ export default function RootLayout() {
     }
   }
 
-  function adicionarParentese(tipo: string) {
-    if (tipo === "(") {
+  function adicionarParentese() {
+    const abertos = (entrada.match(/\(/g) || []).length;
+    const fechados = (entrada.match(/\)/g) || []).length;
+    
+    
+    if (fechados >= abertos) {
       setEntrada(entrada + "(");
-    } else if (tipo === ")") {
+    } else {
       
-      const abertos = (entrada.match(/\(/g) || []).length;
-      const fechados = (entrada.match(/\)/g) || []).length;
-      if (abertos > fechados) {
-        setEntrada(entrada + ")");
-      }
+      setEntrada(entrada + ")");
     }
   }
 
@@ -97,12 +97,8 @@ export default function RootLayout() {
       </Text>
 
       <View style={styles.grid}>
-        <TouchableOpacity style={styles.botao} onPress={() => adicionarParentese("(")}>
-          <Text style={styles.botaoTexto}>(</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.botao} onPress={() => adicionarParentese(")")}>
-          <Text style={styles.botaoTexto}>)</Text>
+        <TouchableOpacity style={styles.botao} onPress={adicionarParentese}>
+          <Text style={styles.botaoTexto}>(  )</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.botao} onPress={() => adicionarOperador("+")}>
