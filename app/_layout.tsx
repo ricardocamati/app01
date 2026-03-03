@@ -92,36 +92,35 @@ export default function RootLayout() {
 
       <TextInput
         style={styles.input}
-        placeholder="Digite um número"
+        placeholder="0"
+        placeholderTextColor="#aaa"
         value={entrada}
         onChangeText={setEntrada}
         keyboardType="numeric"
       />
-      <Text
-        style={styles.saida}
-      >
-        {resultado}
+      <Text style={styles.saida}>
+        {resultado ? `= ${resultado}` : ""}
       </Text>
 
       <View style={styles.grid}>
-        <TouchableOpacity style={styles.botao} onPress={adicionarParentese}>
+        <TouchableOpacity style={[styles.botao, styles.botaoEspecial]} onPress={adicionarParentese}>
           <Text style={styles.botaoTexto}>(  )</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={() => adicionarOperador("+")}>
+        <TouchableOpacity style={[styles.botao, styles.botaoOperador]} onPress={() => adicionarOperador("+")}>
           <Text style={styles.botaoTexto}>+</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={() => adicionarOperador("-")}>
-          <Text style={styles.botaoTexto}>-</Text>
+        <TouchableOpacity style={[styles.botao, styles.botaoOperador]} onPress={() => adicionarOperador("-")}>
+          <Text style={styles.botaoTexto}>−</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={() => adicionarOperador("*")}>
-          <Text style={styles.botaoTexto}>*</Text>
+        <TouchableOpacity style={[styles.botao, styles.botaoOperador]} onPress={() => adicionarOperador("*")}>
+          <Text style={styles.botaoTexto}>×</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={() => adicionarOperador("/")}>
-          <Text style={styles.botaoTexto}>/</Text>
+        <TouchableOpacity style={[styles.botao, styles.botaoOperador]} onPress={() => adicionarOperador("/")}>
+          <Text style={styles.botaoTexto}>÷</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.botao} onPress={() => adicionarNumero("0")}>
@@ -164,23 +163,23 @@ export default function RootLayout() {
           <Text style={styles.botaoTexto}>9</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={adicionarDecimal}>
+        <TouchableOpacity style={[styles.botao, styles.botaoEspecial]} onPress={adicionarDecimal}>
           <Text style={styles.botaoTexto}>.</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={calcularPercentual}>
+        <TouchableOpacity style={[styles.botao, styles.botaoEspecial]} onPress={calcularPercentual}>
           <Text style={styles.botaoTexto}>%</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={calcularInverso}>
+        <TouchableOpacity style={[styles.botao, styles.botaoEspecial]} onPress={calcularInverso}>
           <Text style={styles.botaoTexto}>1/x</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={calcular}>
+        <TouchableOpacity style={[styles.botao, styles.botaoIgual]} onPress={calcular}>
           <Text style={styles.botaoTexto}>=</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao} onPress={limpar}>
+        <TouchableOpacity style={[styles.botao, styles.botaoLimparC]} onPress={limpar}>
           <Text style={styles.botaoTexto}>C</Text>
         </TouchableOpacity>
       </View>
@@ -209,38 +208,10 @@ export default function RootLayout() {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: "#06016d",
-    color: "#000000",
-    marginHorizontal: 10,
-    marginVertical: 20,
-    paddingHorizontal: 10,
-  },
-  botao: {
-    backgroundColor: "#06016d",
-    width: 70,
-    height: 70,
-    margin: 6,
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  botaoTexto: {
-    color: "#efeded",
-    fontSize: 18,
-  },
-  grid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   container: {
     flex: 1,
-    backgroundColor: "#ffffff", 
-    paddingTop: 20,
+    backgroundColor: "#f0f0f5",
+    paddingTop: 40,
   },
   header: {
     flexDirection: "row",
@@ -256,25 +227,82 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   menuIcone: {
-    fontSize: 24,
+    fontSize: 26,
     color: "#06016d",
   },
+  input: {
+    height: 55,
+    borderWidth: 2,
+    borderColor: "#06016d",
+    backgroundColor: "#fff",
+    color: "#111",
+    marginHorizontal: 15,
+    marginVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    fontSize: 20,
+  },
   saida: {
-    fontSize: 20, alignSelf: "center", marginVertical: 10, color: "#fdfdfd",
+    fontSize: 28,
+    fontWeight: "bold",
+    alignSelf: "flex-end",
+    marginRight: 20,
+    marginBottom: 10,
+    color: "#06016d",
+  },
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 5,
+    marginTop: 5,
+  },
+  botao: {
+    backgroundColor: "#ffffff",
+    width: 72,
+    height: 72,
+    margin: 5,
+    borderRadius: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  botaoTexto: {
+    color: "#111",
+    fontSize: 20,
+    fontWeight: "600",
+  },
+  botaoOperador: {
+    backgroundColor: "#06016d",
+  },
+  botaoEspecial: {
+    backgroundColor: "#d0cfe8",
+  },
+  botaoIgual: {
+    backgroundColor: "#4caf50",
+  },
+  botaoLimparC: {
+    backgroundColor: "#e53935",
   },
   historicoContainer: {
     maxHeight: 200,
     marginVertical: 10,
     marginHorizontal: 15,
+    backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: "#06016d",
-    borderRadius: 8,
+    borderRadius: 10,
     padding: 10,
   },
   historicoItem: {
     fontSize: 14,
     color: "#333",
-    paddingVertical: 5,
+    paddingVertical: 6,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
@@ -283,5 +311,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginHorizontal: 15,
     marginBottom: 20,
+    backgroundColor: "#e53935",
+    borderRadius: 8,
+    height: 45,
   },
 });
