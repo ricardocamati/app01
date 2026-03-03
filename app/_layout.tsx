@@ -45,6 +45,37 @@ export default function RootLayout() {
     }
   }
 
+  function calcularPercentual() {
+    if (resultado) {
+      const percentual = (parseFloat(resultado) / 100).toString();
+      setResultado(percentual);
+      setEntrada(percentual);
+    }
+  }
+
+  function calcularInverso() {
+    if (resultado && parseFloat(resultado) !== 0) {
+      const inverso = (1 / parseFloat(resultado)).toString();
+      setResultado(inverso);
+      setEntrada(inverso);
+    } else {
+      setResultado("Erro: Divisão por zero");
+    }
+  }
+
+  function adicionarParentese(tipo: string) {
+    if (tipo === "(") {
+      setEntrada(entrada + "(");
+    } else if (tipo === ")") {
+      
+      const abertos = (entrada.match(/\(/g) || []).length;
+      const fechados = (entrada.match(/\)/g) || []).length;
+      if (abertos > fechados) {
+        setEntrada(entrada + ")");
+      }
+    }
+  }
+
 
 
   return (
@@ -66,6 +97,14 @@ export default function RootLayout() {
       </Text>
 
       <View style={styles.grid}>
+        <TouchableOpacity style={styles.botao} onPress={() => adicionarParentese("(")}>
+          <Text style={styles.botaoTexto}>(</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.botao} onPress={() => adicionarParentese(")")}>
+          <Text style={styles.botaoTexto}>)</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.botao} onPress={() => adicionarOperador("+")}>
           <Text style={styles.botaoTexto}>+</Text>
         </TouchableOpacity>
@@ -124,6 +163,14 @@ export default function RootLayout() {
 
         <TouchableOpacity style={styles.botao} onPress={adicionarDecimal}>
           <Text style={styles.botaoTexto}>.</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.botao} onPress={calcularPercentual}>
+          <Text style={styles.botaoTexto}>%</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.botao} onPress={calcularInverso}>
+          <Text style={styles.botaoTexto}>1/x</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.botao} onPress={calcular}>
