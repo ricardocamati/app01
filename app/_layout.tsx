@@ -5,6 +5,7 @@ export default function RootLayout() {
   const [entrada, setEntrada] = useState("");
   const [resultado, setResultado] = useState("");
   const [historico, setHistorico] = useState<string[]>([]);
+  const [mostrarHistorico, setMostrarHistorico] = useState(false);
 
   function calcular() {
     try {
@@ -81,7 +82,13 @@ export default function RootLayout() {
   return (
     <>
     <View style={styles.container}>
-      <Text style={{ fontSize: 20, alignSelf: "center", color: "#000000" }}>cauculadora </Text>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setMostrarHistorico(!mostrarHistorico)} style={styles.menuBotao}>
+          <Text style={styles.menuIcone}>{"\u2630"}</Text>
+        </TouchableOpacity>
+        <Text style={{ fontSize: 20, color: "#000000" }}>Calculadora</Text>
+        <View style={{ width: 40 }} />
+      </View>
 
       <TextInput
         style={styles.input}
@@ -178,20 +185,24 @@ export default function RootLayout() {
         </TouchableOpacity>
       </View>
 
-      <Text style={{ fontSize: 16, alignSelf: "center", marginTop: 15, fontWeight: "bold" }}>Histórico</Text>
-      <ScrollView style={styles.historicoContainer}>
-        {historico.length === 0 ? (
-          <Text style={{ textAlign: "center", color: "#999", marginTop: 10 }}>Nenhuma operação ainda</Text>
-        ) : (
-          historico.map((item, index) => (
-            <Text key={index} style={styles.historicoItem}>{item}</Text>
-          ))
-        )}
-      </ScrollView>
+      {mostrarHistorico && (
+        <>
+          <Text style={{ fontSize: 16, alignSelf: "center", marginTop: 15, fontWeight: "bold" }}>Histórico</Text>
+          <ScrollView style={styles.historicoContainer}>
+            {historico.length === 0 ? (
+              <Text style={{ textAlign: "center", color: "#999", marginTop: 10 }}>Nenhuma operação ainda</Text>
+            ) : (
+              historico.map((item, index) => (
+                <Text key={index} style={styles.historicoItem}>{item}</Text>
+              ))
+            )}
+          </ScrollView>
 
-      <TouchableOpacity style={[styles.botao, styles.botaoLimpar]} onPress={limparHistorico}>
-        <Text style={styles.botaoTexto}>Limpar Histórico</Text>
-      </TouchableOpacity>
+          <TouchableOpacity style={[styles.botao, styles.botaoLimpar]} onPress={limparHistorico}>
+            <Text style={styles.botaoTexto}>Limpar Histórico</Text>
+          </TouchableOpacity>
+        </>
+      )}
       </View>
     </>
   );
@@ -230,6 +241,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff", 
     paddingTop: 20,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+    marginBottom: 10,
+  },
+  menuBotao: {
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  menuIcone: {
+    fontSize: 24,
+    color: "#06016d",
   },
   saida: {
     fontSize: 20, alignSelf: "center", marginVertical: 10, color: "#fdfdfd",
