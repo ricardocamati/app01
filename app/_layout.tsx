@@ -90,19 +90,20 @@ export default function RootLayout() {
         <View style={{ width: 40 }} />
       </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="0"
-        placeholderTextColor="#aaa"
-        value={entrada}
-        onChangeText={setEntrada}
-        keyboardType="numeric"
-      />
-      <Text style={styles.saida}>
-        {resultado ? `= ${resultado}` : ""}
-      </Text>
+      <View style={styles.calculatorBox}>
+        <TextInput
+          style={styles.input}
+          placeholder="0"
+          placeholderTextColor="#aaa"
+          value={entrada}
+          onChangeText={setEntrada}
+          keyboardType="numeric"
+        />
+        <Text style={styles.saida}>
+          {resultado ? `= ${resultado}` : ""}
+        </Text>
 
-      <View style={styles.grid}>
+        <View style={styles.grid}>
         <TouchableOpacity style={[styles.botao, styles.botaoEspecial]} onPress={adicionarParentese}>
           <Text style={styles.botaoTexto}>(  )</Text>
         </TouchableOpacity>
@@ -183,6 +184,7 @@ export default function RootLayout() {
           <Text style={styles.botaoTexto}>C</Text>
         </TouchableOpacity>
       </View>
+      </View>
 
       {mostrarHistorico && (
         <>
@@ -230,13 +232,22 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: "#06016d",
   },
+  calculatorBox: {
+    borderWidth: 2,
+    borderColor: "#06016d",
+    borderRadius: 12,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    padding: 8,
+    backgroundColor: "#ffffff",
+  },
   input: {
     height: 55,
     borderWidth: 2,
     borderColor: "#06016d",
     backgroundColor: "#fff",
     color: "#111",
-    marginHorizontal: 15,
+    marginHorizontal: 0,
     marginVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 10,
@@ -278,7 +289,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   botaoOperador: {
-    backgroundColor: "#06016d",
+    backgroundColor: "#090297",
+    
   },
   botaoEspecial: {
     backgroundColor: "#d0cfe8",
