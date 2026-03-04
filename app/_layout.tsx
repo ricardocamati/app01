@@ -6,13 +6,14 @@ export default function RootLayout() {
   const [resultado, setResultado] = useState("");
   const [historico, setHistorico] = useState<string[]>([]);
   const [mostrarHistorico, setMostrarHistorico] = useState(false);
+  const [modoEscuro, setModoEscuro] = useState(false);
 
   function calcular() {
     try {
       const linpou = entrada.replace(/(^|[^\d.])0+(\d)/g, "$1$2");
       const res = eval(linpou);
       setResultado(String(res));
-      // Adiciona ao histórico
+      
       if (entrada) {
         setHistorico([...historico, `${entrada} = ${res}`]);
       }
@@ -79,6 +80,8 @@ export default function RootLayout() {
 
 
 
+  const styles = createStyles(modoEscuro);
+
   return (
     <>
     <View style={styles.container}>
@@ -86,8 +89,10 @@ export default function RootLayout() {
         <TouchableOpacity onPress={() => setMostrarHistorico(!mostrarHistorico)} style={styles.menuBotao}>
           <Text style={styles.menuIcone}>{"\u2630"}</Text>
         </TouchableOpacity>
-        <Text style={{ fontSize: 20, color: "#000000" }}>Calculadora</Text>
-        <View style={{ width: 40 }} />
+        <Text style={{ fontSize: 20, color: modoEscuro ? "#ffffff" : "#000000" }}>Calculadora</Text>
+        <TouchableOpacity onPress={() => setModoEscuro(!modoEscuro)} style={styles.menuBotao}>
+          <Text style={{ fontSize: 20 }}>{modoEscuro ? "☀️" : "🌙"}</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.calculatorBox}>
@@ -209,10 +214,11 @@ export default function RootLayout() {
   );
 }
 
-const styles = StyleSheet.create({
+function createStyles(modoEscuro: boolean) {
+  return StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f5",
+    backgroundColor: modoEscuro ? "#121212" : "#f0f0f5",
     paddingTop: 40,
   },
   header: {
@@ -230,23 +236,23 @@ const styles = StyleSheet.create({
   },
   menuIcone: {
     fontSize: 26,
-    color: "#06016d",
+    color: modoEscuro ? "#9d9bff" : "#06016d",
   },
   calculatorBox: {
     borderWidth: 2,
-    borderColor: "#06016d",
+    borderColor: modoEscuro ? "#7c6fff" : "#06016d",
     borderRadius: 12,
     marginHorizontal: 10,
     marginVertical: 5,
     padding: 8,
-    backgroundColor: "#ffffff",
+    backgroundColor: modoEscuro ? "#1e1e1e" : "#ffffff",
   },
   input: {
     height: 55,
     borderWidth: 2,
-    borderColor: "#06016d",
-    backgroundColor: "#fff",
-    color: "#111",
+    borderColor: modoEscuro ? "#7c6fff" : "#06016d",
+    backgroundColor: modoEscuro ? "#2c2c2c" : "#fff",
+    color: modoEscuro ? "#ffffff" : "#111",
     marginHorizontal: 0,
     marginVertical: 10,
     paddingHorizontal: 15,
@@ -259,7 +265,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     marginRight: 20,
     marginBottom: 10,
-    color: "#06016d",
+    color: modoEscuro ? "#9d9bff" : "#06016d",
   },
   grid: {
     flexDirection: "row",
@@ -270,7 +276,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   botao: {
-    backgroundColor: "#ffffff",
+    backgroundColor: modoEscuro ? "#2c2c2c" : "#ffffff",
     width: 72,
     height: 72,
     margin: 5,
@@ -284,7 +290,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
   },
   botaoTexto: {
-    color: "#111",
+    color: modoEscuro ? "#ffffff" : "#111",
     fontSize: 20,
     fontWeight: "600",
   },
@@ -293,7 +299,7 @@ const styles = StyleSheet.create({
     
   },
   botaoEspecial: {
-    backgroundColor: "#d0cfe8",
+    backgroundColor: modoEscuro ? "#3d3d5c" : "#d0cfe8",
   },
   botaoIgual: {
     backgroundColor: "#4caf50",
@@ -305,15 +311,15 @@ const styles = StyleSheet.create({
     maxHeight: 200,
     marginVertical: 10,
     marginHorizontal: 15,
-    backgroundColor: "#fff",
+    backgroundColor: modoEscuro ? "#1e1e1e" : "#fff",
     borderWidth: 1,
-    borderColor: "#06016d",
+    borderColor: modoEscuro ? "#7c6fff" : "#06016d",
     borderRadius: 10,
     padding: 10,
   },
   historicoItem: {
     fontSize: 14,
-    color: "#333",
+    color: modoEscuro ? "#cccccc" : "#333",
     paddingVertical: 6,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
@@ -327,4 +333,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 45,
   },
-});
+  });
+}
